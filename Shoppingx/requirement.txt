@@ -1,0 +1,2 @@
+1. myenv
+2. pip install pillow    ### for image field
