@@ -36,7 +36,7 @@ class ProductDetailView(View):
         if request.user.is_authenticated:
             totalitem=len(Cart.objects.filter(user=request.user))
             item_already_in_cart=Cart.objects.filter(Q(product=product.id)& Q(user=request.user)).exists()
-        return render(request, 'app/productdetail.html',{'product':product,'item_already_in_cart':item_already_in_cart,'totalitem':totalitem})
+        return render(request, 'app/productdetail.html',{'product':product,'item_already_in_cart':item_already_in_cart,'totalitem':self.totalitem})
     
 ### add product in cart
 @login_required
