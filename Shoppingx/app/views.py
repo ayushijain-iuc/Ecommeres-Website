@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from social_django.utils import psa
 from django.urls import reverse_lazy
 from django.views import View
 from . models import Customer, Product, Cart, OrderPlaced
@@ -224,17 +226,53 @@ class CustomerRegistrationView(View):
     def get(self,request):
         form=CustomRegistrationForm()
         return render(request, 'app/customerregistration.html',{'form':form})
-    def post(self,request):
-        form=CustomRegistrationForm(request.POST)
+    # def post(self,request):
+    #     form=CustomRegistrationForm(request.POST)
+    #     if form.is_valid():
+    #         messages.success(request,'Congratulations!! Registered Succesfully')
+    #         form.save()
+    #     return render(request, 'app/customerregistration.html',{'form':form})
+    
+    def post(self, request):
+        form = CustomRegistrationForm(request.POST)
         if form.is_valid():
-            messages.success(request,'Congratulations!! Registered Succesfully')
-            form.save()
-        return render(request, 'app/customerregistration.html',{'form':form})
+            email = form.cleaned_data['email']
+            # Check if user with the provided email already exists
+            existing_user = User.objects.filter(email=email).first()
+            if existing_user:
+                messages.error(request, 'User with this email already exists. Please log in.')
+                return redirect('login')  # Redirect to login page or handle it as needed
+            else:
+                messages.success(request, 'Congratulations!! Registered Successfully')
+                form.save()
+        return render(request, 'app/customerregistration.html', {'form': form})
     
 class CustomLogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request)
-        return redirect(reverse_lazy('login'))  
+        return redirect(reverse_lazy('login')) 
+    
+# @psa('social:complete')
+# def socialauth_signup(request, backend):
+#     user = request.user
+
+#     # Check if user with the provided email already exists
+#     existing_user = User.objects.filter(email=user.email).first()
+
+#     if existing_user:
+#         messages.error(request, 'This email id is already registered. Please log in.')
+#         return redirect('login')  # Redirect to login page or handle it as needed
+#     else:
+#         # If the user does not exist, proceed with saving the user data in the database
+#         # Note: Ensure that the following code is not inadvertently being executed multiple times
+#         try:
+#             # Your user creation logic here (example: user.save())
+#             messages.success(request, 'Congratulations!! Registered Successfully through Google authentication')
+#             return redirect('home')  # Redirect to home page or handle it as needed
+#         except Exception as e:
+#             messages.error(request, 'Error during user creation. Please try again.')
+#             return redirect('login')  # Redirect to login page or handle it as needed  
+ 
  
             
  #     All Product filtring and Showing in home page code       

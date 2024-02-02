@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'social_django',   #add this
+    
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',    #add this
 ]
 
 ROOT_URLCONF = 'Shoppingx.urls'
@@ -63,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',   #add this
             ],
         },
     },
@@ -138,3 +142,33 @@ EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SESSION_ENGINE="django.contrib.sessions.backends.db"
+
+
+#social app custom settings
+AUTHENTICATION_BACKENDS=[
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY='322734498466-k8eocrff6s1equbcksva03dfva2lg4g7.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET='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'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://localhost:8000/social-auth/complete/google-oauth2/'
+
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.social_details',
+#     'social_core.pipeline.social_auth.social_uid',
+#     'social_core.pipeline.social_auth.auth_allowed',
+#     'social_core.pipeline.social_auth.social_user',
+#     'social_core.pipeline.user.get_username',
+#     'social_core.pipeline.user.create_user',
+#     'social_core.pipeline.social_auth.associate_user',
+#     'social_core.pipeline.social_auth.load_extra_data',
+#     'social_core.pipeline.user.user_details',
+# )
+SOCIAL_AUTH_DEBUG = 'debug'
+
+
+
+
+#client secret     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
+#client id        443924342998-4vmbnn18l2o78lmncdq802of4u0cjg5i.apps.googleusercontent.com

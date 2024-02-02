@@ -21,6 +21,13 @@
     <div class="text-center text-primary fw-bold"><small>New to ShoppinglyX ? <a href="{% url 'customerregistration' %}"
        class="text-danger">Create an Account</a> </small></div>
 
+       {% comment %} social url {% endcomment %}
+       <div class="col-md-8 mx-auto social-container my-2 order-md-1">
+         <button class="btn btn-primary mb-2">
+            <a href="{% url 'social:begin' 'google-oauth2' %}">Login With Google</a>
+         </button>
+       </div>
+
        {% if form.non_field_errors %}
        {% for error in form.non_field_errors %}
        <p class="alert alert-danger my-3">{{error}}</p>

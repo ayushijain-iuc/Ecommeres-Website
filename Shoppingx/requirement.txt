@@ -1,2 +1,4 @@
 1. myenv
 2. pip install pillow    ### for image field
+3. pip install social-auth-app-django
+4. pip install django

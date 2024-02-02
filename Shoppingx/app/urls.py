@@ -50,6 +50,8 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(template_name='app/login.html',authentication_form=LoginForm), name='login'),
     path('registration/', views.CustomerRegistrationView.as_view(), name='customerregistration'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
-    
+    # path('socialauth-signup/<backend>/', views.socialauth_signup, name='socialauth_signup'),
+
+    # path('social-auth/', include('social_django.urls',namespace='social')),
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
